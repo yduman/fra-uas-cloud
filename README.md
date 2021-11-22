@@ -7,3 +7,11 @@ This is a monorepo containing all the services and configurations needed for run
 | Name       | Port |
 | ---------- | ---- |
 | `frontend` | 3000 |
+
+### `frontend`
+
+#### Starting the UI locally
+
+```console
+$ cd frontend && yarn start
+```
