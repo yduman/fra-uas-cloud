@@ -7,7 +7,7 @@ This is a monorepo containing all the services and configurations needed for run
 | Name           | Port | Language/Tech |
 | -------------- | ---- | ------------- |
 | `frontend`     | 3000 | TypeScript    |
-| `auth-service` | N/D  | N/D           |
+| `auth-service` | N/D  | TypeScript    |
 | `users-db`     | N/D  | PostgreSQL    |
 
 ### `frontend`
