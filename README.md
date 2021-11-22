@@ -2,4 +2,6 @@
 
 ## Services
 
-- `frontend`
+| Name       | Port |
+| ---------- | ---- |
+| `frontend` | 3000 |
