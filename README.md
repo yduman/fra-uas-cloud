@@ -10,8 +10,23 @@ This is a monorepo containing all the services and configurations needed for run
 
 ### `frontend`
 
+#### Prerequisites
+
+The steps below describe how you install Node.js and Yarn
+
+- Visit [the Volta homepage](https://volta.sh/) and install it
+- Run the following commands
+
+```console
+$ volta --version
+$ volta install node
+$ volta install yarn
+```
+
 #### Starting the UI locally
 
 ```console
-$ cd frontend && yarn start
+$ cd frontend
+$ yarn install # only needed once to install dependencies
+$ yarn start
 ```
