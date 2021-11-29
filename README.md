@@ -4,11 +4,10 @@ This is a monorepo containing all the services and configurations needed for run
 
 ## Services
 
-| Name           | Port | Language/Tech |
-| -------------- | ---- | ------------- |
-| `frontend`     | 3000 | TypeScript    |
-| `auth-service` | N/D  | TypeScript    |
-| `users-db`     | N/D  | PostgreSQL    |
+| Name       | Port | Language/Tech |
+| ---------- | ---- | ------------- |
+| `frontend` | 3000 | TypeScript    |
+| `auth`     | 3001 | TypeScript    |
 
 ### `frontend`
 
