@@ -1,6 +1,9 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../errors/request-validation-error";
+
+import { User } from "../models/user.model";
+import { RequestValidationError } from "../errors/validation.error";
+import { BadRequestError } from "../errors/bad-request.error";
 
 const router = express.Router();
 
@@ -13,14 +16,24 @@ router.post(
       .isLength({ min: 6, max: 32 })
       .withMessage("Password length has to be between 6 and 32 characters"),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     handleValidationErrors(req, res);
-    const { email, password } = req.body;
 
-    console.log("Creating user");
-    res.send({});
+    const { email, password } = req.body;
+    await handleDuplicateEmail(email);
+
+    const user = User.build({ email, password });
+    await user.save();
+    res.status(201).send(user);
   }
 );
+
+async function handleDuplicateEmail(email: string) {
+  const duplicateUser = await User.findOne({ email });
+  if (duplicateUser) {
+    throw new BadRequestError("Email is already being used");
+  }
+}
 
 function handleValidationErrors(req: Request, res: Response) {
   const validationErrors = validationResult(req);

@@ -1,11 +1,11 @@
-import { BaseError } from "./base-error";
+import { BaseError } from "./base.error";
 
 export class DBConnectionError extends BaseError {
   public readonly status = 500;
   private readonly reason = "Error connecting to the database";
 
   constructor() {
-    super("DB connection error");
+    super("Error connecting to the database");
     Object.setPrototypeOf(this, DBConnectionError.prototype);
   }
 
