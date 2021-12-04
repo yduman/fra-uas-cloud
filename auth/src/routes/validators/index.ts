@@ -7,6 +7,7 @@ export function validateEmail() {
 export function validatePassword() {
   return body("password")
     .trim()
+    .notEmpty()
     .isLength({ min: 6, max: 32 })
     .withMessage("Password length has to be between 6 and 32 characters");
 }
