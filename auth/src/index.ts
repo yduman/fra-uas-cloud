@@ -1,25 +1,30 @@
 import express from "express";
 import "express-async-errors";
 import mongoose from "mongoose";
+import cookieSession from "cookie-session";
 
-import {
-  currentUserRouter,
-  loginRouter,
-  logoutRouter,
-  registerRouter,
-} from "./routes";
+import { userRouter } from "./routes/user.route";
 import { errorHandler } from "./middlewares/error.middleware";
 import { NotFoundError } from "./errors/not-found.error";
 import { DBConnectionError } from "./errors/db.error";
+import { UserService } from "./services";
 
 const PORT = 3001;
 const app = express();
+const router = express.Router();
 
+app.set("trust proxy", true);
 app.use(express.json());
-app.use(loginRouter);
-app.use(logoutRouter);
-app.use(registerRouter);
-app.use(currentUserRouter);
+app.use("/", router);
+app.use(
+  cookieSession({
+    signed: false,
+    secure: true,
+  })
+);
+
+userRouter(router, new UserService());
+
 app.all("*", async () => {
   throw new NotFoundError();
 });

@@ -1,7 +1,9 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
 
-import { User } from "../models/user.model";
+import { User, UserDocument } from "../models/user.model";
+import { validateEmail, validatePassword } from "./validators";
 import { RequestValidationError } from "../errors/validation.error";
 import { BadRequestError } from "../errors/bad-request.error";
 
@@ -9,24 +11,33 @@ const router = express.Router();
 
 router.post(
   "/api/users/register",
-  [
-    body("email").isEmail().withMessage("Email must be valid"),
-    body("password")
-      .trim()
-      .isLength({ min: 6, max: 32 })
-      .withMessage("Password length has to be between 6 and 32 characters"),
-  ],
+  [validateEmail(), validatePassword()],
   async (req: Request, res: Response) => {
     handleValidationErrors(req, res);
 
     const { email, password } = req.body;
     await handleDuplicateEmail(email);
 
-    const user = User.build({ email, password });
-    await user.save();
+    const user = await createUser(email, password);
+    const token = createToken(user);
+
+    req.session = { jwt: token };
     res.status(201).send(user);
   }
 );
+
+function createToken(user: UserDocument) {
+  return jwt.sign({ id: user.id, email: user.email }, "somesecret");
+}
+
+async function createUser(
+  email: string,
+  password: string
+): Promise<UserDocument> {
+  const user = User.build({ email, password });
+  await user.save();
+  return user;
+}
 
 async function handleDuplicateEmail(email: string) {
   const duplicateUser = await User.findOne({ email });

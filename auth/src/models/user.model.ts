@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { HashingService } from "../utils/hashing.service";
+import { HashingService } from "../services/HashingService";
 
 interface UserProps {
   email: string;
@@ -10,7 +10,7 @@ interface UserModel extends mongoose.Model<UserDocument> {
   build(props: UserProps): UserDocument;
 }
 
-interface UserDocument extends mongoose.Document {
+export interface UserDocument extends mongoose.Document {
   email: string;
   password: string;
   createdAt: string;
