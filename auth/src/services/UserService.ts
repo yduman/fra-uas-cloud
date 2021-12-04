@@ -8,6 +8,10 @@ export class UserService {
     return user;
   }
 
+  async getUserByEmail(email: string): Promise<UserDocument | null> {
+    return await User.findOne({ email });
+  }
+
   async checkDuplicateEmail(email: string) {
     const duplicateUser = await User.findOne({ email });
     if (duplicateUser) {
