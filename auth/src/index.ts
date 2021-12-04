@@ -15,13 +15,13 @@ const router = express.Router();
 
 app.set("trust proxy", true);
 app.use(express.json());
-app.use("/", router);
 app.use(
   cookieSession({
     signed: false,
     secure: true,
   })
 );
+app.use("/", router);
 
 userRouter(router, new UserService());
 
