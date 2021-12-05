@@ -38,7 +38,8 @@ export const userRouter = (router: Router, userService: UserService): void => {
   );
 
   router.post("/api/users/logout", (req: Request, res: Response) => {
-    res.send("Hello logout");
+    req.session = null;
+    res.send({});
   });
 
   router.get("/api/users/current", (req: Request, res: Response) => {
