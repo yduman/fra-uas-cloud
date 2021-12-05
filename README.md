@@ -24,28 +24,5 @@ $ kubectl get pods --namespace=ingress-nginx
 
 | Service    | Port | Language   | DB      | Port  |
 | ---------- | ---- | ---------- | ------- | ----- |
-| `frontend` | 3000 | TypeScript | -       | -     |
 | `auth`     | 3001 | TypeScript | MongoDB | 27017 |
 
-### `frontend`
-
-#### Prerequisites
-
-The steps below describe how you install Node.js and Yarn
-
-- Visit [the Volta homepage](https://volta.sh/) and install it
-- Run the following commands
-
-```console
-$ volta --version
-$ volta install node
-$ volta install yarn
-```
-
-#### Starting the UI locally
-
-```console
-$ cd frontend
-$ yarn install # only needed once to install dependencies
-$ yarn start
-```
