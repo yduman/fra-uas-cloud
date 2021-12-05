@@ -22,7 +22,6 @@ $ kubectl get pods --namespace=ingress-nginx
 
 ## Services
 
-| Service    | Port | Language   | DB      | Port  |
-| ---------- | ---- | ---------- | ------- | ----- |
-| `auth`     | 3001 | TypeScript | MongoDB | 27017 |
-
+| Service | Port | Language   | DB      | Port  |
+| ------- | ---- | ---------- | ------- | ----- |
+| `auth`  | 3001 | TypeScript | MongoDB | 27017 |
