@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import { getCurrentUser } from "../middlewares/user-context.middleware";
 import { validateRequest } from "../middlewares/validation.middleware";
 import { TokenService, UserService } from "../services";
