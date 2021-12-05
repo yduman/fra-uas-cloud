@@ -12,7 +12,9 @@ export const userRouter = (router: Router, userService: UserService): void => {
     async (req: Request, res: Response) => {
       const { email, password } = req.body;
       await userService.checkDuplicateEmail(email);
+
       const user = await userService.createUser(email, password);
+
       const token = TokenService.createToken(user);
       req.session = { jwt: token };
       res.status(201).send(user);
@@ -25,20 +27,8 @@ export const userRouter = (router: Router, userService: UserService): void => {
     validateRequest,
     async (req: Request, res: Response) => {
       const { email, password } = req.body;
-      const user = await userService.getUserByEmail(email);
 
-      if (!user) {
-        throw new BadRequestError("Invalid login credentials");
-      }
-
-      const isPasswordMatch = await HashingService.compare(
-        password,
-        user.password
-      );
-
-      if (!isPasswordMatch) {
-        throw new BadRequestError("Invalid login credentials");
-      }
+      const user = await userService.loginUser(email, password);
 
       const token = TokenService.createToken(user);
       req.session = { jwt: token };

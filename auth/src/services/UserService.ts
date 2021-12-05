@@ -1,3 +1,4 @@
+import { HashingService } from ".";
 import { BadRequestError } from "../errors/bad-request.error";
 import { User, UserDocument } from "../models/user.model";
 
@@ -8,8 +9,22 @@ export class UserService {
     return user;
   }
 
-  async getUserByEmail(email: string): Promise<UserDocument | null> {
-    return await User.findOne({ email });
+  async loginUser(email: string, password: string): Promise<UserDocument> {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new BadRequestError("Invalid login credentials");
+    }
+
+    const isPasswordMatch = await HashingService.compare(
+      password,
+      user.password
+    );
+
+    if (!isPasswordMatch) {
+      throw new BadRequestError("Invalid login credentials");
+    }
+
+    return user;
   }
 
   async checkDuplicateEmail(email: string) {
