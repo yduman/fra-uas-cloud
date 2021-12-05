@@ -1,7 +1,8 @@
 import { Router, Request, Response } from "express";
-import { BadRequestError } from "../errors/bad-request.error";
+import jwt from "jsonwebtoken";
+
 import { validateRequest } from "../middlewares/validation.middleware";
-import { HashingService, TokenService, UserService } from "../services";
+import { TokenService, UserService } from "../services";
 import { validateEmail, validatePassword } from "./validators";
 
 export const userRouter = (router: Router, userService: UserService): void => {
@@ -40,7 +41,12 @@ export const userRouter = (router: Router, userService: UserService): void => {
     res.send("Hello logout");
   });
 
-  router.post("/api/users/current", (req: Request, res: Response) => {
-    res.send("Hello current user");
+  router.get("/api/users/current", (req: Request, res: Response) => {
+    if (!req.session?.jwt) {
+      return res.send({ currentUser: null });
+    }
+
+    const currentUser = userService.getCurrentUser(req.session.jwt);
+    res.send(currentUser);
   });
 };

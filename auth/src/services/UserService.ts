@@ -1,8 +1,17 @@
+import jwt from "jsonwebtoken";
+
 import { HashingService } from ".";
 import { BadRequestError } from "../errors/bad-request.error";
 import { User, UserDocument } from "../models/user.model";
 
 export class UserService {
+  async checkDuplicateEmail(email: string) {
+    const duplicateUser = await User.findOne({ email });
+    if (duplicateUser) {
+      throw new BadRequestError("Email is already being used");
+    }
+  }
+
   async createUser(email: string, password: string): Promise<UserDocument> {
     const user = User.build({ email, password });
     await user.save();
@@ -27,10 +36,12 @@ export class UserService {
     return user;
   }
 
-  async checkDuplicateEmail(email: string) {
-    const duplicateUser = await User.findOne({ email });
-    if (duplicateUser) {
-      throw new BadRequestError("Email is already being used");
+  getCurrentUser(token: string) {
+    try {
+      const payload = jwt.verify(token, process.env.JWT_KEY!);
+      return { currentUser: payload };
+    } catch (err) {
+      return { currentUser: null };
     }
   }
 }
