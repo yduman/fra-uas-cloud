@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-
+import { getCurrentUser } from "../middlewares/user-context.middleware";
 import { validateRequest } from "../middlewares/validation.middleware";
 import { TokenService, UserService } from "../services";
 import { validateEmail, validatePassword } from "./validators";
@@ -42,12 +42,11 @@ export const userRouter = (router: Router, userService: UserService): void => {
     res.send({});
   });
 
-  router.get("/api/users/current", (req: Request, res: Response) => {
-    if (!req.session?.jwt) {
-      return res.send({ currentUser: null });
+  router.get(
+    "/api/users/current",
+    getCurrentUser,
+    (req: Request, res: Response) => {
+      res.send({ currentUser: req.currentUser || null });
     }
-
-    const currentUser = userService.getCurrentUser(req.session.jwt);
-    res.send(currentUser);
-  });
+  );
 };

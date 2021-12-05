@@ -1,5 +1,3 @@
-import jwt from "jsonwebtoken";
-
 import { HashingService } from ".";
 import { BadRequestError } from "../errors/bad-request.error";
 import { User, UserDocument } from "../models/user.model";
@@ -34,14 +32,5 @@ export class UserService {
     }
 
     return user;
-  }
-
-  getCurrentUser(token: string) {
-    try {
-      const payload = jwt.verify(token, process.env.JWT_KEY!);
-      return { currentUser: payload };
-    } catch (err) {
-      return { currentUser: null };
-    }
   }
 }
