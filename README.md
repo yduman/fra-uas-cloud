@@ -22,6 +22,13 @@ $ kubectl get pods --namespace=ingress-nginx
 
 ## Services
 
-| Service | Port | Language   | DB      | Port  |
-| ------- | ---- | ---------- | ------- | ----- |
-| `auth`  | 3001 | TypeScript | MongoDB | 27017 |
+| Service  | Port | Tech               | DB      | DB Port | Image         |
+| -------- | ---- | ------------------ | ------- | ------- | ------------- |
+| `client` | 3000 | JavaScript/Next.js | -       | -       | yduman/client |
+| `auth`   | 3001 | TypeScript/Express | MongoDB | 27017   | yduman/auth   |
+
+## Local Development
+
+> Currently only tested on macOS via Docker Desktop
+
+For local development you need to install the Skaffold CLI on your machine and run `skaffold dev` in order to spin up a local Kubernetes cluster.
