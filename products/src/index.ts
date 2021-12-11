@@ -3,13 +3,11 @@ import "express-async-errors";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
-import { userRouter } from "./routes/user.route";
 import { errorHandler } from "./middlewares/error.middleware";
 import { NotFoundError } from "./errors/not-found.error";
 import { DBConnectionError } from "./errors/db.error";
-import { UserService } from "./services";
 
-const PORT = 3001;
+const PORT = 3002;
 const app = express();
 const router = express.Router();
 
@@ -22,8 +20,6 @@ app.use(
   })
 );
 app.use("/", router);
-
-userRouter(router, new UserService());
 
 app.all("*", async () => {
   throw new NotFoundError();
@@ -40,7 +36,7 @@ const bootstrap = async () => {
   }
 
   try {
-    await mongoose.connect("mongodb://auth-db-service:27017/auth");
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Successfully connected to the DB");
   } catch (error) {
     throw new DBConnectionError();

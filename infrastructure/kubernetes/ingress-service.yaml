@@ -10,6 +10,13 @@ spec:
     - host: shopping.dev
       http:
         paths:
+          - path: /api/products/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: products-service
+                port:
+                  number: 3002
           - path: /api/users/?(.*)
             pathType: Prefix
             backend:
