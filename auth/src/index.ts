@@ -21,8 +21,8 @@ app.use(
     secure: true,
   })
 );
-app.use("/", router);
 
+app.use("/", router);
 userRouter(router, new UserService());
 
 app.all("*", async () => {
@@ -40,7 +40,7 @@ const bootstrap = async () => {
   }
 
   try {
-    await mongoose.connect("mongodb://auth-db-service:27017/auth");
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Successfully connected to the DB");
   } catch (error) {
     throw new DBConnectionError();

@@ -3,9 +3,12 @@ import "express-async-errors";
 import mongoose from "mongoose";
 import cookieSession from "cookie-session";
 
+import { productsRouter } from "./routes/products.route";
 import { errorHandler } from "./middlewares/error.middleware";
 import { NotFoundError } from "./errors/not-found.error";
 import { DBConnectionError } from "./errors/db.error";
+import { getCurrentUser } from "./middlewares/user-context.middleware";
+import { ProductService } from "./services/ProductService";
 
 const PORT = 3002;
 const app = express();
@@ -19,7 +22,9 @@ app.use(
     secure: true,
   })
 );
+app.use(getCurrentUser);
 app.use("/", router);
+productsRouter(router, new ProductService());
 
 app.all("*", async () => {
   throw new NotFoundError();

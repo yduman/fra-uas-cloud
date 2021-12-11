@@ -54,13 +54,14 @@ For `minikube`, you need to retrieve the IP via `$ minikube ip` and also make su
 
 ## Services
 
-| Service  | Port | Tech               | DB      | DB Port | Image         |
-| -------- | ---- | ------------------ | ------- | ------- | ------------- |
-| `client` | 3000 | JavaScript/Next.js | -       | -       | yduman/client |
-| `auth`   | 3001 | TypeScript/Express | MongoDB | 27017   | yduman/auth   |
+| Service    | Port | Tech               | DB      | DB Port | Image           |
+| ---------- | ---- | ------------------ | ------- | ------- | --------------- |
+| `client`   | 3000 | JavaScript/Next.js | -       | -       | yduman/client   |
+| `auth`     | 3001 | TypeScript/Express | MongoDB | 27017   | yduman/auth     |
+| `products` | 3002 | TypeScript/Express | MongoDB | 27017   | yduman/products |
 
 ## Local Development
 
-> Currently only tested on macOS via Docker Desktop
+> Currently only tested on macOS via Docker Desktop and Linux via minikube
 
 For local development you need to install the Skaffold CLI on your machine and run `skaffold dev` in order to spin up a local Kubernetes cluster.
