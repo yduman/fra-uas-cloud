@@ -10,4 +10,20 @@ export class ProductService {
     await product.save();
     return product;
   }
+
+  async findProductById(productId: string): Promise<ProductDocument | null> {
+    return await Product.findById(productId);
+  }
+
+  async getAllProducts() {
+    return await Product.find({});
+  }
+
+  async updateProduct(product: ProductDocument, title: string, price: number) {
+    product.set({
+      title,
+      price,
+    });
+    await product.save();
+  }
 }
