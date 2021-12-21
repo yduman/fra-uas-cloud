@@ -4,6 +4,7 @@ export default function AppBar({ currentUser }) {
   const links = [
     !currentUser && { label: "Register", href: "/auth/register" },
     !currentUser && { label: "Login", href: "/auth/login" },
+    currentUser && { label: "Offer Products", href: "/products/create" },
     currentUser && { label: "Logout", href: "/auth/logout" },
   ]
     .filter((link) => link)
